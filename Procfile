@@ -1,1 +1,1 @@
-worker: node bot.js discord bot
+worker: node bot.js ilxgend-bot
