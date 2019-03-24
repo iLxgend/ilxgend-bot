@@ -1,0 +1,113 @@
+const Discord = require('discord.js');
+const { prefix, token } = require('./config.json')
+const bot = new Discord.Client
+
+var version = 'v1.10';
+
+bot.on("ready", () => {
+    console.log(`Bot has started, with ${bot.users.size} users, in ${bot.channels.size} channels of ${bot.guilds.size} guilds.`); 
+})
+
+bot.on("guildCreate", guild => {
+    console.log(`New guild joined: ${guild.name} (id: ${guild.id}). This guild has ${guild.memberCount} members!`);
+})
+
+bot.on("guildDelete", guild => {
+    console.log(`I have been removed from: ${guild.name} (id: ${guild.id})`);
+})
+
+bot.on("message", async message => {
+    if(message.author.bot) return;
+
+    if(message.content.indexOf(config.prefix) !== 0) return;
+
+    const args = message.content.slice(config.prefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
+
+    if(command === "ping") {
+        const m = await message.channel.send("Ping?");
+        m.edit(`Pong! Latency is ${m.createdTimestamp - message.createdTimestamp}ms. API Latency is ${Math.round(bot.ping)}ms`);
+    }
+
+    if(command === "say") {
+        const sayMessage = args.join(" ");
+        message.delete().catch(O_o=>{}) 
+        message.channel.send(sayMessage);
+    }
+
+    if(command === "kick") {
+        if(!message.member.roles.some(r=>["Administrator", "Moderator"].includes(r.name)) )
+            return message.reply("Sorry, you don't have permissions to use this!");
+    
+        let member = message.mentions.members.first() || message.guild.members.get(args[0]);
+        if(!member)
+            return message.reply("Please mention a valid member of this server");
+        if(!member.kickable) 
+            return message.reply("I cannot kick this user! Do they have a higher role? Do I have kick permissions?");
+    
+
+        let reason = args.slice(1).join(' ');
+        if(!reason) reason = "No reason provided";
+    
+        await member.kick(reason)
+            .catch(error => message.reply(`Sorry ${message.author} I couldn't kick because of : ${error}`));
+        message.reply(`${member.user.tag} has been kicked by ${message.author.tag} because: ${reason}`);
+
+}
+
+bot.on('message', message=>{
+
+    let args = message.content.substring(prefix.length).split(" ");
+
+    switch(args[0]){
+        
+        case 'ping':
+            message.channel.sendMessage('pong!')
+            break;
+        
+        case 'website':
+            message.channel.sendMessage('https://www.youtube.com/channel/UCdBk3opOaxNY05mK9vnvfxA')
+            break;
+        
+        case 'info':
+            if(args[1] === 'version'){
+                message.channel.sendMessage('I am currently on ' + version)
+            }else{
+                message.channel.sendMessage('Invalid arguments.')
+            }
+            break;
+        
+        case 'clear':
+            if(!args[1]) return message.reply('Error please define second arg.')
+            message.channel.bulkDelete(args[1]);
+            break;
+
+        case 'embed':
+            const embed = new Discord.RichEmbed()
+            .setTitle('User Information')
+            .addField('Name', message.author.username, true)
+            .addField('Version', version, true)
+            .addField('Current Server', message.guild.name, true)
+            .setColor(0xFF0000)
+            .setThumbnail(message.author.avatarURL)
+            .setFooter('Subscribe to iLxgend on YT!')
+            .setTimestamp(timestamp = new Date)
+            message.channel.sendEmbed(embed);
+            break;
+
+
+    }
+})
+
+bot.on('ready', () => {
+    bot.user.setStatus('available')
+    bot.user.setPresence({
+        game: {
+            name: 'bot in construction',
+            type: "STREAMING",
+            url: "https://www.twitch.tv/ninja"
+        }
+    })
+})
+
+bot.login(config.token);
