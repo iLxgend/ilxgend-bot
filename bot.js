@@ -40,7 +40,7 @@ bot.on('message', message=>{
             .addField('Current Server', message.guild.name, true)
             .setColor(0xFF0000)
             .setThumbnail(message.author.avatarURL)
-            .setFooter('Subscribe to iLxgend on YT!')
+            .setFooter('Powered by Luna')
             .setTimestamp(timestamp = new Date)
             message.channel.sendEmbed(embed);
             break;
