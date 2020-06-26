@@ -50,7 +50,7 @@ bot.on('message', message=>{
 })
 
 bot.on('ready', () => {
-    bot.user.setStatus('available')
+    bot.user.setStatus('idle')
     bot.user.setPresence({
         game: {
             name: '',
