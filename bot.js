@@ -53,9 +53,9 @@ bot.on('ready', () => {
     bot.user.setStatus('available')
     bot.user.setPresence({
         game: {
-            name: 'bot in construction',
-            type: "STREAMING",
-            url: "https://www.twitch.tv/ninja"
+            name: '',
+            type: "IDLE",
+            url: ""
         }
     })
 })
