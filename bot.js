@@ -5,6 +5,8 @@ const prefix = '!';
 
 var version = 'v1.0';
 
+client.user.setStatus('dnd')
+
 bot.on('ready', () => {
     bot.user.setStatus('available')
     bot.user.setPresence({
