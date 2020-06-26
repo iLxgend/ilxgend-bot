@@ -50,11 +50,11 @@ bot.on('message', message=>{
 })
 
 bot.on('ready', () => {
-    bot.user.setStatus('idle')
+    bot.user.setStatus('do_not_disturb')
     bot.user.setPresence({
         game: {
             name: '',
-            type: "IDLE",
+            type: "DO_NOT_DISTURB",
             url: ""
         }
     })
