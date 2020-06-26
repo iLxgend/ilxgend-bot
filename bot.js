@@ -10,7 +10,7 @@ bot.on('ready', () => {
     bot.user.setPresence({
         game: {
             name: '',
-            type: "idle",
+            type: "dnd",
             url: ""
         }
     })
