@@ -6,11 +6,11 @@ const prefix = '!';
 var version = 'v1.0';
 
 bot.on('ready', () => {
-    bot.user.setStatus('idle')
+    bot.user.setStatus('dnd')
     bot.user.setPresence({
         game: {
             name: '.',
-            type: "idle",
+            type: "dnd",
             url: ""
         }
     });
